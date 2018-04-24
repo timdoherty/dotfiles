@@ -1,5 +1,60 @@
+set clipboard=unnamed
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set number
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+set list
+set backupdir=~/.vim/tmp
+set directory=~/.vim/tmp
+set splitright
+
+set fillchars=stl:-,stlnc:-,vert:│
+set wildmenu
+set wildignore+=node_modules/*
+set wildmode=longest:list,full
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 syntax on
+syntax enable
+"set syntax=javaScript
+
+" folding
+"set foldmethod=indent
+"set foldlevelstart=1
+"let javaScript_fold=1
+"set foldnestmax=2
+"set nofoldenable
+"set foldlevel=2
+
+let NERDTreeShowHidden=1
+
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP<CR>'
+let g:ctrlp_max_files=20000 
+let g:ctrlp_custom_ignore='.git$|node_modules$'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"
+map <c-p> :CtrlP<CR>
+
+set background=dark
+colorscheme solarized8_high
+
+"set background=dark
+"colorscheme palenight
+
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+
+augroup vimrc
+   autocmd!
+   autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey | highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey | highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey 
+augroup END
+
 
 " An example for a vimrc file.
 "
@@ -29,6 +84,7 @@ if has("vms")
 else
   set backup		" keep a backup file (restore to previous version)
   set undofile		" keep an undo file (undo changes after closing)
+  set undodir=~/.vim/tmp 
 endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
