@@ -1,8 +1,12 @@
+"""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""Settings"""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""
+set cursorline
+set cursorcolumn
+set colorcolumn=100
+set nowrap
 set clipboard=unnamed
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
 set number
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 set list
@@ -15,6 +19,25 @@ set wildmenu
 set wildignore+=node_modules/*
 set wildmode=longest:list,full
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
+set relativenumber
+"set backspace=indent,eol,start	 " more powerful backspacing
+set tabstop=2    " Set the default tabstop
+set softtabstop=2
+set shiftwidth=2 " Set the default shift width for indents
+set expandtab   " Make tabs into spaces (set by tabstop)
+set smarttab " Smarter tab levels
+set termguicolors " enable true colors support (plug ayu-vim)
+set autoindent
+set hlsearch
+set showmatch  " Show matching brackets.
+set matchtime=5  " Bracket blinking.
+set showcmd " Display an incomplete command in the lower right corner of the Vim window
+set laststatus=2 " Powerline
+
+filetype on           " Enable filetype detection
+filetype indent on    " Enable filetype-specific indenting
+filetype plugin on    " Enable filetype-specific plugins
 
 syntax on
 syntax enable
@@ -54,6 +77,25 @@ augroup vimrc
    autocmd!
    autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey | highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey | highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey 
 augroup END
+
+"""""""""""""""Macros""""""""""""""
+map <C-e> :%s/\s\+$//e <CR> " kill all bad whitespace in the file
+map <C-f> :Files <CR>
+map <C-q> :q <CR> " Quit file
+map <C-s> :w<CR> :echo "Saved" <CR> " Save file
+map <C-h> <S-^>
+map <C-l> <S-$>
+map <C-]> :OnlineThesaurusCurrentWord <CR>
+map <C-n> :let @+ = expand("%") <CR> " copy current relative file path
+
+imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
+imap <C-@> <C-Space>
+" imap <C-m> <CR><Esc>O
+
+"vmap <C-c> y:call system("pbcopy", getreg("\""))<CR> " Copy
+"vnoremap <C-Space> <ESC>
+
+"nmap <C-V> :call setreg("\"",system("pbpaste"))<CR>p " Paste
 
 
 " An example for a vimrc file.
