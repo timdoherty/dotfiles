@@ -35,6 +35,8 @@ set matchtime=5  " Bracket blinking.
 set showcmd " Display an incomplete command in the lower right corner of the Vim window
 set laststatus=2 " Powerline
 
+set rtp+=/usr/local/bin/fzf
+
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
@@ -80,7 +82,7 @@ augroup END
 
 """""""""""""""Macros""""""""""""""
 map <C-e> :%s/\s\+$//e <CR> " kill all bad whitespace in the file
-map <C-f> :Files <CR>
+map <S-f> :Files <CR>
 map <C-q> :q <CR> " Quit file
 map <C-s> :w<CR> :echo "Saved" <CR> " Save file
 map <C-h> <S-^>
@@ -96,6 +98,12 @@ imap <C-@> <C-Space>
 "vnoremap <C-Space> <ESC>
 
 "nmap <C-V> :call setreg("\"",system("pbpaste"))<CR>p " Paste
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Constants """"""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 
 " An example for a vimrc file.
