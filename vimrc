@@ -99,6 +99,14 @@ imap <C-@> <C-Space>
 
 "nmap <C-V> :call setreg("\"",system("pbpaste"))<CR>p " Paste
 
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Constants """"""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""
