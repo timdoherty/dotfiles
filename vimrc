@@ -1,10 +1,20 @@
 """""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""Settings"""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+set history=50		" keep 50 lines of command line history
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+set incsearch		" do incremental searching
 set cursorline
 set cursorcolumn
 set colorcolumn=100
 set nowrap
+set formatoptions=t
+set textwidth=0
+set wrapmargin=0
 set clipboard=unnamed
 set expandtab
 set number
@@ -13,15 +23,12 @@ set list
 set backupdir=~/.vim/tmp
 set directory=~/.vim/tmp
 set splitright
-
 set fillchars=stl:-,stlnc:-,vert:│
 set wildmenu
-set wildignore+=node_modules/*
 set wildmode=longest:list,full
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-
 set relativenumber
-"set backspace=indent,eol,start	 " more powerful backspacing
+set backspace=indent,eol,start	 " more powerful backspacing
 set tabstop=2    " Set the default tabstop
 set softtabstop=2
 set shiftwidth=2 " Set the default shift width for indents
@@ -34,8 +41,10 @@ set showmatch  " Show matching brackets.
 set matchtime=5  " Bracket blinking.
 set showcmd " Display an incomplete command in the lower right corner of the Vim window
 set laststatus=2 " Powerline
-
 set rtp+=/usr/local/bin/fzf
+
+silent !stty -ixon " Allow us to use Ctrl-s and Ctrl-q as keybinds
+autocmd VimLeave * silent !stty ixon " Restore default behaviour when leaving Vim.
 
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
@@ -46,29 +55,17 @@ syntax enable
 "set syntax=javaScript
 
 " folding
-"set foldmethod=indent
-"set foldlevelstart=1
+set foldmethod=indent
+set foldlevelstart=1
 "let javaScript_fold=1
-"set foldnestmax=2
-"set nofoldenable
-"set foldlevel=2
+set foldnestmax=2
+set nofoldenable
+set foldlevel=2
 
 let NERDTreeShowHidden=1
 
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_cmd = 'CtrlP<CR>'
-let g:ctrlp_max_files=20000 
-let g:ctrlp_custom_ignore='.git$|node_modules$'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-"
-map <c-p> :CtrlP<CR>
-
 set background=dark
 colorscheme solarized8_high
-
-"set background=dark
-"colorscheme palenight
 
 augroup javascript_folding
     au!
@@ -80,15 +77,18 @@ augroup vimrc
    autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey | highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey | highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey 
 augroup END
 
+
 """""""""""""""Macros""""""""""""""
 map <C-e> :%s/\s\+$//e <CR> " kill all bad whitespace in the file
-map <S-f> :Files <CR>
 map <C-q> :q <CR> " Quit file
+map <leader>f :Files <CR>
+"map <S-f> :Files <CR>
 map <C-s> :w<CR> :echo "Saved" <CR> " Save file
 map <C-h> <S-^>
 map <C-l> <S-$>
 map <C-]> :OnlineThesaurusCurrentWord <CR>
 map <C-n> :let @+ = expand("%") <CR> " copy current relative file path
+nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
 
 imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
 imap <C-@> <C-Space>
@@ -101,6 +101,7 @@ imap <C-@> <C-Space>
 
 inoremap " ""<left>
 inoremap ' ''<left>
+inoremap ` ``<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
@@ -113,29 +114,10 @@ inoremap {;<CR> {<CR>};<ESC>O
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2015 Mar 24
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
 endif
-
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
 
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
@@ -144,13 +126,6 @@ else
   set undofile		" keep an undo file (undo changes after closing)
   set undodir=~/.vim/tmp 
 endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
