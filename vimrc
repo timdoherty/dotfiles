@@ -56,17 +56,18 @@ syntax enable
 
 " folding
 set foldmethod=indent
-set foldlevelstart=1
-"let javaScript_fold=1
-set foldnestmax=2
-set nofoldenable
-set foldlevel=2
+"set foldlevelstart=1
+""let javaScript_fold=1
+"set foldnestmax=2
+"set nofoldenable
+"set foldlevel=2
 
 let NERDTreeShowHidden=1
 
 set background=dark
 colorscheme solarized8_high
 
+"-----autocommands-----"
 augroup javascript_folding
     au!
     au FileType javascript setlocal foldmethod=syntax
@@ -77,11 +78,29 @@ augroup vimrc
    autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey | highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey | highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey 
 augroup END
 
+augroup js_snippets
+  autocmd!
+  autocmd FileType javascript UltiSnipsAddFiletypes javascript-es6-react 
+  autocmd FileType javascript UltiSnipsAddFiletypes javascript-jasmine-arrow 
+augroup END
 
-"""""""""""""""Macros""""""""""""""
+" augroup nerdtree_open
+"   autocmd StdinReadPre * let s:std_in=1
+"   autocmd VimEnter * if argc() == 0 && !exists(“s:std_in”) | NERDTree | endif
+
+" augroup END
+  " open quickfix item in vert split
+  autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L:cclo<CR>
+
+"""""""""""""""Mappings""""""""""""""
+"
+"""""""""""""""""Normal Mode""""""""""""""""""
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 map <C-e> :%s/\s\+$//e <CR> " kill all bad whitespace in the file
 map <C-q> :q <CR> " Quit file
-map <leader>f :Files <CR>
+noremap <leader>f :Files <CR>
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+map <leader>n :NERDTreeToggle <CR>
 "map <S-f> :Files <CR>
 map <C-s> :w<CR> :echo "Saved" <CR> " Save file
 map <C-h> <S-^>
@@ -90,15 +109,13 @@ map <C-]> :OnlineThesaurusCurrentWord <CR>
 map <C-n> :let @+ = expand("%") <CR> " copy current relative file path
 nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
 
-imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
-imap <C-@> <C-Space>
 " imap <C-m> <CR><Esc>O
 
 "vmap <C-c> y:call system("pbcopy", getreg("\""))<CR> " Copy
 "vnoremap <C-Space> <ESC>
 
 "nmap <C-V> :call setreg("\"",system("pbpaste"))<CR>p " Paste
-
+""""""""""""""""""Insert mode""""""""""""""""""
 inoremap " ""<left>
 inoremap ' ''<left>
 inoremap ` ``<left>
@@ -107,12 +124,25 @@ inoremap [ []<left>
 inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
+imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
+imap <C-@> <C-Space>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Constants """"""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"
+"let g:UltiSnipsSnippetDirectories = [
+"  \"~/.vim/pack/tdoherty/start/vim-snippets/UltiSnips",
+"  \"~/.vim/pack/tdoherty/start/vim-snippets/snippets",
+"\]
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let NERDTreeQuitOnOpen = 1 " quit nerdtree when opening a file
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
