@@ -127,3 +127,50 @@ const wrapper = mount(
   <${1:MyComponent}/>
 );
 endsnippet
+
+snippet rcc ""
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+class ${1:MyComponent} extends Component {
+  static get propTypes() {
+    return {};
+  }
+
+  static get defaultProps() {
+    return {};
+  }
+
+  render() {
+    return (
+      <div />
+    );
+  }
+}
+
+export default $1;
+endsnippet
+
+snippet rrfc ""
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+function ${1:MyComponent}() {
+  return <div />;
+}
+
+$1.propTypes = {};
+
+$1.defaultProps = {};
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)($1);
+endsnippet

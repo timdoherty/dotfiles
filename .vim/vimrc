@@ -75,7 +75,10 @@ augroup END
 
 augroup vimrc
    autocmd!
-   autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey | highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey | highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey 
+   autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey |
+                         highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey |
+                         highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey
+   autocmd ColorScheme * highlight Pmenu guifg=#002b36 guibg=#586e75
 augroup END
 
 augroup js_snippets
@@ -95,19 +98,18 @@ augroup END
 """""""""""""""Mappings""""""""""""""
 "
 """""""""""""""""Normal Mode""""""""""""""""""
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-map <C-e> :%s/\s\+$//e <CR> " kill all bad whitespace in the file
-map <C-q> :q <CR> " Quit file
-noremap <leader>f :Files <CR>
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-map <leader>n :NERDTreeToggle <CR>
-"map <S-f> :Files <CR>
-map <C-s> :w<CR> :echo "Saved" <CR> " Save file
-map <C-h> <S-^>
-map <C-l> <S-$>
-map <C-]> :OnlineThesaurusCurrentWord <CR>
-map <C-n> :let @+ = expand("%") <CR> " copy current relative file path
-nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
+let mapleader = " "                               " space as mod key
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>     " open nertree to the current open file
+map <leader>n :NERDTreeToggle <CR>                " toggle nerdtree
+map <C-e> :%s/\s\+$//e <CR>                       " kill all bad whitespace in the file
+map <C-q> :q <CR>                                 " Quit file
+noremap <leader>f :Files <CR>                     " Fuzzy finder
+map <C-s> :w<CR> :echo "Saved" <CR>               " Save file
+map <C-h> <S-^>                                   " jump to beginning of line
+map <C-l> <S-$>                                   " jump to end of line
+map <C-]> :OnlineThesaurusCurrentWord <CR>        " thesauras
+map <C-n> :let @+ = expand("%") <CR>              " copy current relative file path
+nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>         " set working directory to current file path
 
 " imap <C-m> <CR><Esc>O
 
@@ -136,6 +138,7 @@ let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"
 "  \"~/.vim/pack/tdoherty/start/vim-snippets/UltiSnips",
 "  \"~/.vim/pack/tdoherty/start/vim-snippets/snippets",
 "\]
+let g:UltiSnipsExpandTrigger = "<C-j>"
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 let NERDTreeQuitOnOpen = 1 " quit nerdtree when opening a file
