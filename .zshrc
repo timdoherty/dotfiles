@@ -114,3 +114,7 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" "${FZF_BASE:-.}"'
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export NODE_OPTIONS=--max_old_space_size=4096
+
+# tmux / vim solarized 
+export TERM="xterm-256color"
+alias tmux="tmux -2"
