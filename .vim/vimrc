@@ -133,16 +133,14 @@ let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
-" ALE lint/formatting engine
+""""""""""""" ALE lint/formatting engine """""""""""""
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'typescript': ['tslint' ,'prettier'],
 \   'css': ['prettier'],
 \   'scss': ['prettier']
 \}
 let g:ale_fix_on_save = 1
-" TODO probably better to use config files in each repo; revisit this
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
-
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
