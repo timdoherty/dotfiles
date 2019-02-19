@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-PATH=$HOME/bin:/usr/local/bin:$PATH
+PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 #export PATH=/usr/local/Cellar/postgresql@9.5/9.5.9/bin:$PATH
 
 # Path to your oh-my-zsh installation.
