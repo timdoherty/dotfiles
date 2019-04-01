@@ -80,16 +80,14 @@ augroup js_snippets
   autocmd FileType javascript UltiSnipsAddFiletypes javascript-jasmine-arrow 
 augroup END
 
-" augroup nerdtree_open
-"   autocmd StdinReadPre * let s:std_in=1
-"   autocmd VimEnter * if argc() == 0 && !exists(“s:std_in”) | NERDTree | endif
+" open quickfix item in vert split
+autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L:cclo<CR>
 
-" augroup END
-  " open quickfix item in vert split
-  autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L:cclo<CR>
-
-"""""""""""""""Mappings""""""""""""""
 "
+"""""""""""""""""""""""""""""""""""""
+"""""""""""""""Mappings""""""""""""""
+"""""""""""""""""""""""""""""""""""""
+
 """""""""""""""""Normal Mode""""""""""""""""""
 let mapleader = " "                                       " space as mod key
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>             " open nertree to the current open file
@@ -118,29 +116,9 @@ inoremap {;<CR> {<CR>};<ESC>O
 imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
 imap <C-@> <C-Space>
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Constants """"""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""
-let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
-let g:solarized_termcolors=256                            " use solarized 256 fallback
-let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"           " location for custom snippets
-let g:UltiSnipsExpandTrigger = "<C-j>"                    " change trigger to work with YCM
-
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'                     " find command for fzf plugin
-let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-""""""""""""" ALE lint/formatting engine """""""""""""
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'typescript': ['tslint' ,'prettier'],
-\   'css': ['prettier'],
-\   'scss': ['prettier']
-\}
-let g:ale_fix_on_save = 1
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -270,4 +248,23 @@ call plug#end()
 """"""""""""""""" Plugin-specific settings and mappings """"""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
+let g:solarized_termcolors=256                            " use solarized 256 fallback
+let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"           " location for custom snippets
+let g:UltiSnipsExpandTrigger = "<C-j>"                    " change trigger to work with YCM
+
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'                     " find command for fzf plugin
+let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+""""""""""""" ALE lint/formatting engine """""""""""""
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'typescript': ['tslint' ,'prettier'],
+\   'css': ['prettier'],
+\   'scss': ['prettier']
+\}
+let g:ale_fix_on_save = 1
 
