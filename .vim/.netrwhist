@@ -1,11 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/timd/source/procore/.circleci'
-let g:netrw_dirhist_2='/Users/timd/source'
-let g:netrw_dirhist_3='/Users/timd'
-let g:netrw_dirhist_4='/Users'
-let g:netrw_dirhist_5='/Users/timd/source'
-let g:netrw_dirhist_6='/Users/timd/source/procore'
-let g:netrw_dirhist_7='/Users/timd/source'
-let g:netrw_dirhist_8='/Users/timd/Desktop'
-let g:netrw_dirhist_9='/Users/timd/source/procore/hydra_clients/commitments/src/tools/commitments/billingStatuses/components/Pakaukau'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/timd/source/core-labs/packages/pakaukau'
+let g:netrw_dirhist_2='/Users/timd/dotfiles/.vim/plugged/YouCompleteMe'
+let g:netrw_dirhist_3='/Users/timd/source/core-labs'

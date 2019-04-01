@@ -220,3 +220,54 @@ if has('langmap') && exists('+langnoremap')
   " compatible).
   set langnoremap
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Plugins """"""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Install the plugin manager if it doesn't exist
+filetype off
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" -- Syntax, languages, & frameworks
+
+Plug 'honza/vim-snippets'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript', 'javascript.jsx']}
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
+Plug 'Valloric/YouCompleteMe'
+Plug 'w0rp/ale'
+
+" -- Search & file nav
+
+Plug 'scrooloose/nerdtree'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+
+" -- Display
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" -- Misc Enhancements
+
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+
+call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Plugin-specific settings and mappings """"""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
