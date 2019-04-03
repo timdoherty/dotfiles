@@ -1,6 +1,6 @@
-"""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""Settings"""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""" Settings """"""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -29,78 +29,98 @@ set wildmode=longest:list,full
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 set backspace=indent,eol,start	                          " more powerful backspacing
-set tabstop=2                                             " Set the default tabstop
+set tabstop=2                                             " set the default tabstop
 set softtabstop=2
-set shiftwidth=2                                          " Set the default shift width for indents
-set expandtab                                             " Make tabs into spaces (set by tabstop)
-set smarttab                                              " Smarter tab levels
+set shiftwidth=2                                          " set the default shift width for indents
+set expandtab                                             " make tabs into spaces (set by tabstop)
+set smarttab                                              " smarter tab levels
 set termguicolors                                         " enable true colors support (plug ayu-vim)
 set autoindent
 set hlsearch
-set showmatch                                             " Show matching brackets.
-set matchtime=5                                           " Bracket blinking.
-set showcmd                                               " Display an incomplete command in the lower right corner of the Vim window
-set laststatus=2                                          " Powerline
+set showmatch                                             " show matching brackets.
+set matchtime=5                                           " bracket blinking.
+set showcmd                                               " display an incomplete command in the lower right corner of the vim window
+set laststatus=2                                          " powerline
 set rtp+=/usr/local/bin/fzf
-set completeopt-=preview                                  " turn off preview window for YCM
+set completeopt-=preview                                  " turn off preview window for ycm
 set noswapfile                                            " turn off swap files
 set foldmethod=indent                                     " detect folds based on inentation
 set background=dark
-set t_Co=256                                              " force vim to use 256 colors
+set t_co=256                                              " force vim to use 256 colors
 
 colorscheme solarized8_high
 
-silent !stty -ixon                                        " Allow us to use Ctrl-s and Ctrl-q as keybinds
+silent !stty -ixon                                        " allow us to use ctrl-s and ctrl-q as keybinds
 
-filetype on                                               " Enable filetype detection
-filetype indent on                                        " Enable filetype-specific indenting
-filetype plugin on                                        " Enable filetype-specific plugins
+filetype on                                               " enable filetype detection
+filetype indent on                                        " enable filetype-specific indenting
+filetype plugin on                                        " enable filetype-specific plugins
 
 syntax on
 syntax enable
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"-----autocommands-----"
-autocmd VimLeave * silent !stty ixon                      " Restore default behaviour when leaving Vim.
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""" Autocommands """"""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd vimleave * silent !stty ixon                      " restore default behaviour when leaving vim.
 augroup javascript_folding
     au!
-    au FileType javascript setlocal foldmethod=syntax
-augroup END
+    au filetype javascript setlocal foldmethod=syntax
+augroup end
 
 augroup vimrc
    autocmd!
-   autocmd ColorScheme * highlight VertSplit term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE guibg=bg guifg=grey |
-                         highlight StatusLine term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey |
-                         highlight StatusLineNC term=NONE cterm=NONE gui=NONE guibg=bg guifg=grey
-   autocmd ColorScheme * highlight Pmenu guifg=#002b36 guibg=#839496
-augroup END
+   autocmd colorscheme * highlight vertsplit term=none cterm=none ctermfg=none ctermbg=none guibg=bg guifg=grey |
+                         highlight statusline term=none cterm=none gui=none guibg=bg guifg=grey |
+                         highlight statuslinenc term=none cterm=none gui=none guibg=bg guifg=grey
+   autocmd colorscheme * highlight pmenu guifg=#002b36 guibg=#839496
+augroup end
 
 augroup js_snippets
   autocmd!
-  autocmd FileType javascript UltiSnipsAddFiletypes javascript-es6-react 
-  autocmd FileType javascript UltiSnipsAddFiletypes javascript-jasmine-arrow 
-augroup END
+  autocmd filetype javascript UltiSnipsAddFiletypes javascript-es6-react 
+  autocmd filetype javascript UltiSnipsAddFiletypes javascript-jasmine-arrow 
+augroup end
 
 " open quickfix item in vert split
-autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L:cclo<CR>
+autocmd! filetype qf nnoremap <buffer> <leader><enter> <c-w><enter><c-w>l:cclo<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Mappings """""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-"""""""""""""""""""""""""""""""""""""
-"""""""""""""""Mappings""""""""""""""
-"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""normal mode""""""""""""""""""
+" space as mod key
+let mapleader = " "
 
-"""""""""""""""""Normal Mode""""""""""""""""""
-let mapleader = " "                                       " space as mod key
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>             " open nertree to the current open file
-map <leader>n :NERDTreeToggle <CR>                        " toggle nerdtree
-map <C-e> :%s/\s\+$//e <CR>                               " kill all bad whitespace in the file
-map <C-q> :q <CR>                                         " Quit file
-noremap <leader>f :Files <CR>                             " Fuzzy finder
-map <C-s> :w<CR> :echo "Saved" <CR>                       " Save file
-map <C-h> <S-^>                                           " jump to beginning of line
-map <C-l> <S-$>                                           " jump to end of line
-map <C-]> :OnlineThesaurusCurrentWord <CR>                " thesauras
-map <C-n> :let @+ = expand("%") <CR>                      " copy current relative file path
-nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>                 " set working directory to current file path
+" open nertree to the current open file
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+
+" toggle nerdtree
+map <leader>n :NERDTreeToggle <CR>
+
+" kill all bad whitespace in the file
+map <C-e> :%s/\s\+$//e <CR>
+
+" Quit file - doesn't work, check with Gabe Harms (copied from his .vimrc)
+map <C-q> :q <CR>
+
+" Fuzzy finder
+noremap <leader>f :Files <CR>
+
+" Save file - doesn't work, check with Gabe Harms (copied from his .vimrc)
+map <C-s> :w<CR> :echo "Saved" <CR>
+
+map <C-h> <S-^>
+map <C-l> <S-$>
+
+" copy current relative file path
+map <C-n> :let @+ = expand("%") <CR>
+
+" set working directory to current file path
+nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
 
 """"""""""""""""""Insert mode""""""""""""""""""
 inoremap " ""<left>
@@ -114,44 +134,96 @@ inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 imap <C-s> <Esc> :w<CR> :echo "Saved" <CR> " Save file
+
+" what does this do?
 imap <C-@> <C-Space>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""" Constants """"""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  set undofile		" keep an undo file (undo changes after closing)
-  set undodir=~/.vim/tmp 
-endif
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Plugins """"""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Install the plugin manager if it doesn't exist
+filetype off
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
+call plug#begin('~/.vim/plugged')
 
+" -- Syntax, languages, & frameworks
+
+Plug 'honza/vim-snippets'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript', 'javascript.jsx']}
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
+Plug 'Valloric/YouCompleteMe'
+Plug 'w0rp/ale'
+
+" -- Search & file nav
+
+Plug 'scrooloose/nerdtree'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+
+" -- Display
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" -- Misc Enhancements
+
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+
+call plug#end()
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Plugin-specific settings and mappings """"""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:solarized_termcolors=256                            " use solarized 256 fallback
+
+let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"           " location for custom snippets
+let g:UltiSnipsExpandTrigger = "<C-j>"                    " change trigger to work with YCM
+
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'                     " find command for fzf plugin
+
+let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
+let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'typescript': ['tslint' ,'prettier'],
+\   'css': ['prettier'],
+\   'scss': ['prettier']
+\}
+let g:ale_fix_on_save = 1
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_theme= 'solarized'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Misc """""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
@@ -198,73 +270,4 @@ if has('langmap') && exists('+langnoremap')
   " compatible).
   set langnoremap
 endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""" Plugins """"""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Install the plugin manager if it doesn't exist
-filetype off
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-
-" -- Syntax, languages, & frameworks
-
-Plug 'honza/vim-snippets'
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript', 'javascript.jsx']}
-Plug 'SirVer/ultisnips'
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'Valloric/YouCompleteMe'
-Plug 'w0rp/ale'
-
-" -- Search & file nav
-
-Plug 'scrooloose/nerdtree'
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-
-" -- Display
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" -- Misc Enhancements
-
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-
-call plug#end()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""" Plugin-specific settings and mappings """"""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
-let g:solarized_termcolors=256                            " use solarized 256 fallback
-let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"           " location for custom snippets
-let g:UltiSnipsExpandTrigger = "<C-j>"                    " change trigger to work with YCM
-
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'                     " find command for fzf plugin
-let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-""""""""""""" ALE lint/formatting engine """""""""""""
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'typescript': ['tslint' ,'prettier'],
-\   'css': ['prettier'],
-\   'scss': ['prettier']
-\}
-let g:ale_fix_on_save = 1
 
