@@ -8,6 +8,7 @@ set history=50		                                        " keep 50 lines of comma
 set ruler		                                              " show the cursor position all the time
 set showcmd		                                            " display incomplete commands
 set incsearch		                                          " do incremental searching
+set ignorecase                                            " Ignore case for search patterns
 set cursorline                                            " highlight the current cursor line
 set cursorcolumn                                          " highlight the current cursor column
 set colorcolumn=100                                       " highlight the max column width
@@ -40,6 +41,11 @@ set hlsearch
 set showmatch                                             " show matching brackets.
 set matchtime=5                                           " bracket blinking.
 set showcmd                                               " display an incomplete command in the lower right corner of the vim window
+set smartcase                                             " Respect cases in search when mixed case detected
+set smartindent                                           " Changes indent based on file extension
+set splitbelow                                            " default horizontal split below
+set splitright                                            " default vertical split right
+set tags=./tags,tags;$HOME                                " Vim to search for Ctags file in current file's directory, moving up the directory structure until found/home is hit
 set laststatus=2                                          " powerline
 set rtp+=/usr/local/bin/fzf
 set completeopt-=preview                                  " turn off preview window for ycm
@@ -96,7 +102,7 @@ autocmd! filetype qf nnoremap <buffer> <leader><enter> <c-w><enter><c-w>l:cclo<c
 let mapleader = " "
 
 " open nertree to the current open file
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+nnoremap <silent> <Leader>c :NERDTreeFind<CR>
 
 " toggle nerdtree
 map <leader>n :NERDTreeToggle <CR>
@@ -122,7 +128,31 @@ map <C-n> :let @+ = expand("%") <CR>
 " set working directory to current file path
 nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
 
+" write to buffer (save)
+nmap <leader>s :w<CR>
+
+" highlight search
+map <leader>l :set hlsearch!<CR>
+
+" open vimrc in a new tab!
+map <leader>v :tabe ~/.vimrc<CR>
+
+" open root .env in a new tab
+map <leader>e :tabe ~/.env<CR>
+
+" toggle text wrapping
+map <leader>w :set wrap!<CR>:set linebreak<CR>
 """"""""""""""""""Insert mode""""""""""""""""""
+" Prevent vim from moving cursor after returning to normal mode
+imap <esc> <esc>l
+
+"Autocenter file jumps
+nmap G Gzz
+nmap * *zz
+nmap # #zz
+nmap <C-o> <C-o>zz
+nmap <C-i> <C-i>zz
+
 inoremap " ""<left>
 inoremap ' ''<left>
 inoremap ` ``<left>
@@ -216,7 +246,25 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+
+" unicode symbols
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_theme= 'solarized'
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 """""""""""""""""""""""""""""""""""""""""""""""""""""
