@@ -1,23 +1,24 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""" Settings """"""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
-set history=50		                                        " keep 50 lines of command line history
-set ruler		                                              " show the cursor position all the time
-set showcmd		                                            " display incomplete commands
-set incsearch		                                          " do incremental searching
-set ignorecase                                            " Ignore case for search patterns
+set autoread                                              " auto read files modified outside of vim
+set history=50                                            " keep 50 lines of command line history
+set ruler                                                 " show the cursor position all the time
+set showcmd                                               " display incomplete commands
+set incsearch                                             " do incremental searching
+set ignorecase smartcase                                  " Ignore case for search patterns
 set cursorline                                            " highlight the current cursor line
 set cursorcolumn                                          " highlight the current cursor column
-set colorcolumn=100                                       " highlight the max column width
+" set colorcolumn=100                                       " highlight the max column width
 set nowrap                                                " turn off text wrapping
 set formatoptions=t
-set textwidth=0
+set textwidth=80                                          " make it obvious where 80 chars is
+set colorcolumn=+1
 set wrapmargin=0
 set clipboard=unnamed
 set expandtab
+set mouse=a
 set number
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 set list
@@ -52,11 +53,16 @@ set completeopt-=preview                                  " turn off preview win
 set noswapfile                                            " turn off swap files
 set foldmethod=indent                                     " detect folds based on inentation
 set background=dark
+set synmaxcol=250                                         " stop syntax higlighting at 250 columns
 set t_co=256                                              " force vim to use 256 colors
+set undofile
+set undodir=~/.vim/undodir
 
 colorscheme solarized8_high
 
-silent !stty -ixon                                        " allow us to use ctrl-s and ctrl-q as keybinds
+:silent !stty -ixon                                        " allow us to use ctrl-s and ctrl-q as keybinds
+:silent call system('mkdir -p ' . &undodir)                " make the undo directory if it doesn't exist
+
 
 filetype on                                               " enable filetype detection
 filetype indent on                                        " enable filetype-specific indenting
@@ -91,6 +97,10 @@ augroup end
 
 " open quickfix item in vert split
 autocmd! filetype qf nnoremap <buffer> <leader><enter> <c-w><enter><c-w>l:cclo<cr>
+
+"Write on entering and leaving buffers
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,20 +111,20 @@ autocmd! filetype qf nnoremap <buffer> <leader><enter> <c-w><enter><c-w>l:cclo<c
 " space as mod key
 let mapleader = " "
 
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
 " open nertree to the current open file
 nnoremap <silent> <Leader>c :NERDTreeFind<CR>
-
-" toggle nerdtree
-map <leader>n :NERDTreeToggle <CR>
 
 " kill all bad whitespace in the file
 map <C-e> :%s/\s\+$//e <CR>
 
 " Quit file - doesn't work, check with Gabe Harms (copied from his .vimrc)
 map <C-q> :q <CR>
-
-" Fuzzy finder
-noremap <leader>f :Files <CR>
 
 " Save file - doesn't work, check with Gabe Harms (copied from his .vimrc)
 map <C-s> :w<CR> :echo "Saved" <CR>
@@ -124,6 +134,13 @@ map <C-l> <S-$>
 
 " copy current relative file path
 map <C-n> :let @+ = expand("%") <CR>
+
+" LEADER
+" toggle nerdtree
+map <leader>n :NERDTreeToggle <CR>
+
+" Fuzzy finder
+noremap <leader>f :Files <CR>
 
 " set working directory to current file path
 nnoremap <leader>C :lcd %:p:h<CR>:pwd<CR>
@@ -142,6 +159,21 @@ map <leader>e :tabe ~/.env<CR>
 
 " toggle text wrapping
 map <leader>w :set wrap!<CR>:set linebreak<CR>
+
+map <Leader>l :Lines<CR>
+map <Leader>b :Buffer<CR>
+map <Leader>m :Marks<CR>
+map <Leader>y :BTags<CR>
+map <Leader>Y :Tags<CR>
+map <Leader>; :History:<CR>
+map <Leader>/ :History/<CR>
+map <Leader>r :registers<CR
+
+" autoindent file
+map <Leader>i mzgg=G`z<CR>
+
+map <Leader>vs :source ~/.vimrc<CR>
+
 """"""""""""""""""Insert mode""""""""""""""""""
 " Prevent vim from moving cursor after returning to normal mode
 imap <esc> <esc>l
@@ -172,6 +204,12 @@ imap <C-@> <C-Space>
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 """"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Commands """""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! MakeTags !ctags -R " generate tags in for the working directory
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Plugins """"""""""""""""""""""""""
@@ -234,6 +272,12 @@ let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
+" vim-jsx
+let g:jsx_ext_required = 0
+
+" javascript-libraries-syntax
+let g:used_javascript_libs = 'jquery,react,flux,chai,ramda,handlebars'
+
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'typescript': ['tslint' ,'prettier'],
@@ -263,7 +307,7 @@ let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_theme= 'solarized'
+let g:airline_theme= 'hybrid'
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -285,8 +329,8 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " For all text files set 'textwidth' to 80 characters.
+  autocmd FileType text setlocal textwidth=80
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
