@@ -1,32 +1,5 @@
-snippet jt
-import {
-  describe,
-  it,
-  beforeEach,
-  afterEach
-} from 'mocha';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
+snippet jut
 import ${1:myModule} from '../$1';
-
-describe('$1', () => {
-  beforeEach(() => {
-
-  });
-
-  afterEach(() => {
-
-  });
-
-  it('should be defined', () => {
-    expect($1).to.not.be.undefined;
-  })
-});
-endsnippet
-
-snippet jjt
-import ${1:myModule} from './$1';
 
 describe('$1', () => {
   beforeEach(() => {
@@ -45,41 +18,9 @@ endsnippet
 
 snippet jct ""
 import React from 'react';
-import {
-  describe,
-  it,
-  beforeEach,
-  afterEach
-} from 'mocha';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
 
 import ${1:MyComponent} from '../$1';
-
-describe('<$1/>', () => {
-  beforeEach(() => {
-    // setup each test here (or use before() for all)
-  });
-
-  afterEach(() => {
-    // tear down each test here (or use after() for all)
-  });
-
-  it('shallow renders the component', () => {
-    const wrapper = shallow(
-      <$1 />
-    );
-    expect(wrapper.exists()).to.be.true;
-  });
-});
-endsnippet
-
-snippet jjct ""
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import ${1:MyComponent} from './$1';
 
 describe('<$1/>', () => {
   beforeEach(() => {

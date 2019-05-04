@@ -2,61 +2,59 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
-set autoread                                              " auto read files modified outside of vim
-set history=50                                            " keep 50 lines of command line history
-set ruler                                                 " show the cursor position all the time
-set showcmd                                               " display incomplete commands
-set incsearch                                             " do incremental searching
-set ignorecase smartcase                                  " Ignore case for search patterns
-set cursorline                                            " highlight the current cursor line
-set cursorcolumn                                          " highlight the current cursor column
-" set colorcolumn=100                                       " highlight the max column width
-set nowrap                                                " turn off text wrapping
-set formatoptions=t
-set textwidth=80                                          " make it obvious where 80 chars is
-set colorcolumn=+1
-set wrapmargin=0
-set clipboard=unnamed
-set expandtab
-set mouse=a
-set number
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-set list
-set backupdir=~/.vim/tmp
-set directory=~/.vim/tmp
-set splitright
-set fillchars=stl:-,stlnc:-,vert:│
-set wildmenu
-set wildmode=longest:list,full
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set relativenumber
-set backspace=indent,eol,start	                          " more powerful backspacing
-set tabstop=2                                             " set the default tabstop
-set softtabstop=2
-set shiftwidth=2                                          " set the default shift width for indents
-set expandtab                                             " make tabs into spaces (set by tabstop)
-set smarttab                                              " smarter tab levels
-set termguicolors                                         " enable true colors support (plug ayu-vim)
 set autoindent
+set autoread                                              " auto read files modified outside of vim
+set background=dark
+set backspace=indent,eol,start	                          " more powerful backspacing
+set backupdir=~/.vim/tmp
+set clipboard=unnamed
+set colorcolumn=+1
+set completeopt-=preview                                  " turn off preview window for ycm
+set cursorcolumn                                          " highlight the current cursor column
+set cursorline                                            " highlight the current cursor line
+set directory=~/.vim/tmp
+set expandtab
+set expandtab                                             " make tabs into spaces (set by tabstop)
+set fillchars=stl:-,stlnc:-,vert:│
+set foldmethod=indent                                     " detect folds based on inentation
+set foldlevel=99                                          " set a high fold level, should open all unless files have more than 99 levels of nesting
+set history=50                                            " keep 50 lines of command line history
 set hlsearch
-set showmatch                                             " show matching brackets.
+set ignorecase smartcase                                  " Ignore case for search patterns
+set incsearch                                             " do incremental searching
+set laststatus=2                                          " powerline
+set list
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<   " whitespace placeholders
 set matchtime=5                                           " bracket blinking.
+set mouse=a                                               " use a mouse if available
+set noswapfile                                            " turn off swap files
+set number                                                " show line numbers
+set path+=**                                              " recursively search directories
+set relativenumber                                        " show relative line numbers
+set rtp+=/usr/local/bin/fzf
+set ruler                                                 " show the cursor position all the time
+set shiftwidth=2                                          " set the default shift width for indents
 set showcmd                                               " display an incomplete command in the lower right corner of the vim window
+set showcmd                                               " display incomplete commands
+set showmatch                                             " show matching brackets.
 set smartcase                                             " Respect cases in search when mixed case detected
 set smartindent                                           " Changes indent based on file extension
+set smarttab                                              " smarter tab levels
+set softtabstop=2                                         " tab = 2 spaces
 set splitbelow                                            " default horizontal split below
 set splitright                                            " default vertical split right
-set tags=./tags,tags;$HOME                                " Vim to search for Ctags file in current file's directory, moving up the directory structure until found/home is hit
-set laststatus=2                                          " powerline
-set rtp+=/usr/local/bin/fzf
-set completeopt-=preview                                  " turn off preview window for ycm
-set noswapfile                                            " turn off swap files
-set foldmethod=indent                                     " detect folds based on inentation
-set background=dark
 set synmaxcol=250                                         " stop syntax higlighting at 250 columns
 set t_co=256                                              " force vim to use 256 colors
-set undofile
-set undodir=~/.vim/undodir
+set tabstop=2                                             " set the default tabstop
+set tags=./tags,tags;$HOME                                " Vim to search for Ctags file in current file's directory, moving up the directory structure until found/home is hit
+set termguicolors                                         " enable true colors support (plug ayu-vim)
+set textwidth=80                                          " make it obvious where 80 chars is
+set undodir=~/.vim/undodir                                " directory to store undo files
+set undofile                                              " name to use for undo files
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip                  " ignore these in wildcard searches
+set wildmenu                                              " enable wilcard for ex commands
+set wildmode=longest:list,full
+set wrapmargin=0
 
 colorscheme solarized8_high
 
@@ -101,6 +99,13 @@ autocmd! filetype qf nnoremap <buffer> <leader><enter> <c-w><enter><c-w>l:cclo<c
 "Write on entering and leaving buffers
 au FocusGained,BufEnter * :silent! !
 au FocusLost,WinLeave * :silent! w
+
+" Automatically equalize splits when Vim is resized
+autocmd VimResized * wincmd =
+
+" jsx comments
+" autocmd FileType jsx setlocal commentstring={/*\ %s\ */}
+" autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,8 +134,9 @@ map <C-q> :q <CR>
 " Save file - doesn't work, check with Gabe Harms (copied from his .vimrc)
 map <C-s> :w<CR> :echo "Saved" <CR>
 
-map <C-h> <S-^>
-map <C-l> <S-$>
+" hmmm reconsider these, faster split navigation is probably more important
+map <C-w>h <S-^>
+map <C-w>l <S-$>
 
 " copy current relative file path
 map <C-n> :let @+ = expand("%") <CR>
@@ -167,7 +173,7 @@ map <Leader>y :BTags<CR>
 map <Leader>Y :Tags<CR>
 map <Leader>; :History:<CR>
 map <Leader>/ :History/<CR>
-map <Leader>r :registers<CR
+map <Leader>r :registers<CR>
 
 " autoindent file
 map <Leader>i mzgg=G`z<CR>
@@ -177,6 +183,11 @@ map <Leader>vs :source ~/.vimrc<CR>
 """"""""""""""""""Insert mode""""""""""""""""""
 " Prevent vim from moving cursor after returning to normal mode
 imap <esc> <esc>l
+
+" use jj and jk for escape, better alternative for macbook
+inoremap jj <Esc>l
+inoremap jk <Esc>l
+inoremap kj <Esc>l
 
 "Autocenter file jumps
 nmap G Gzz
@@ -205,6 +216,7 @@ imap <C-@> <C-Space>
 inoremap <C-U> <C-G>u<C-U>
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""ex mode"""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Commands """""""""""""""""""""""""
