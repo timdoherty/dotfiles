@@ -280,7 +280,13 @@ let g:solarized_termcolors=256                            " use solarized 256 fa
 let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"           " location for custom snippets
 let g:UltiSnipsExpandTrigger = "<C-j>"                    " change trigger to work with YCM
 
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'                     " find command for fzf plugin
+" FZF
+let $FZF_DEFAULT_COMMAND = 'ag -g "" --path-to-ignore ~/.ignore'                     " find command for fzf plugin
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <Leader>t :BTags<CR>
+nnoremap <Leader>T :Tags<CR>
+nnoremap <Leader>a :Ag<CR>
 
 let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
 let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
