@@ -2,6 +2,8 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+set modelines=0                                           " disable modeline support
+set nomodeline                                            " disable modeline support
 set autoindent
 set autoread                                              " auto read files modified outside of vim
 set autowrite                                             " auto write when switching buffers
@@ -56,6 +58,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip                  " ignore these in wild
 set wildmenu                                              " enable wilcard for ex commands
 set wildmode=longest:list,full
 set wrapmargin=0
+set nowrap
 
 colorscheme solarized8_high
 
@@ -118,6 +121,12 @@ autocmd VimResized * wincmd =
 " space as mod key
 let mapleader = " "
 
+" turn off arrow keys
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up>   <Nop>
+nnoremap <Down> <Nop>
+
 " Quicker window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -166,7 +175,8 @@ map <leader>v :tabe ~/.vimrc<CR>
 map <leader>e :tabe ~/.env<CR>
 
 " toggle text wrapping
-map <leader>w :set wrap!<CR>:set linebreak<CR>
+map <leader>w :set wrap!<CR>
+" :set linebreak<CR>
 
 map <Leader>l :Lines<CR>
 map <Leader>b :Buffer<CR>
@@ -186,10 +196,16 @@ map <Leader>vs :source ~/.vimrc<CR>
 " Prevent vim from moving cursor after returning to normal mode
 imap <esc> <esc>l
 
+" turn off arrow keys
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up>   <Nop>
+inoremap <Down> <Nop>
+
 " use jj and jk for escape, better alternative for macbook
 inoremap jj <Esc>l
 inoremap jk <Esc>l
-inoremap kj <Esc>l
+" inoremap kj <Esc>l
 
 "Autocenter file jumps
 nmap G Gzz
@@ -251,6 +267,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'w0rp/ale'
 Plug 'ternjs/tern_for_vim', { 'do': 'cd ~/.vim/plugged/tern_for_vim && npm install tern' }
 Plug 'mattn/emmet-vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 " -- Search & file nav
 
@@ -262,11 +279,16 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" -- version control
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'airblade/vim-gitgutter'
+
 " -- Misc Enhancements
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
 call plug#end()
@@ -287,7 +309,23 @@ nnoremap <Leader>h :History<CR>
 nnoremap <Leader>t :BTags<CR>
 nnoremap <Leader>T :Tags<CR>
 nnoremap <Leader>a :Ag<CR>
+nnoremap <Leader>R :Rg<CR>
 
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+
+ function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+ let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+ " NERDTree
 let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
 let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
 let NERDTreeAutoDeleteBuffer = 1
@@ -301,7 +339,7 @@ let g:jsx_ext_required = 0
 let g:used_javascript_libs = 'jquery,react,flux,chai,ramda,handlebars'
 
 " Emmet
-" let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -316,6 +354,9 @@ let g:ale_fixers = {
 \}
 let g:ale_fix_on_save = 1
 let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -339,8 +380,33 @@ let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_theme= 'hybrid'
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+"=== vim-fugitive
+" show commits for every source line
+nnoremap gb :Gblame<CR>
+" Open current line in the browser
+nnoremap <Leader>gb :.Gbrowse<CR>
+" Open visual selection in the browser
+vnoremap <Leader>gb :Gbrowse<CR>
+
+"=== vim-gitgutter
+" Update sign column every quarter second
+set updatetime=250
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '>'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '<'
+let g:gitgutter_override_sign_column_highlight = 1
+highlight SignColumn guibg=bg
+highlight SignColumn ctermbg=bg
+
+" jump between hunks
+nmap <Leader>gn <Plug>GitGutterNextHunk  " git next
+nmap <Leader>gp <Plug>GitGutterPrevHunk  " git previous
+
+" Hunk-add and hunk-revert for chunk staging
+nmap <Leader>ga <Plug>GitGutterStageHunk  " git add (chunk)
+nmap <Leader>gu <Plug>GitGutterUndoHunk   " git undo (chunk)
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
