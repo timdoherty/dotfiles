@@ -103,6 +103,10 @@ function! gitgutter#utility#system(cmd, ...) abort
   return output
 endfunction
 
+function! gitgutter#utility#has_repo_path(bufnr)
+  return index(['', -1, -2], gitgutter#utility#repo_path(a:bufnr, 0)) == -1
+endfunction
+
 " Path of file relative to repo root.
 "
 " *     empty string - not set
@@ -110,7 +114,7 @@ endfunction
 " *               -1 - pending
 " *               -2 - not tracked by git
 function! gitgutter#utility#repo_path(bufnr, shellesc) abort
-  let p = gitgutter#utility#getbufvar(a:bufnr, 'path')
+  let p = gitgutter#utility#getbufvar(a:bufnr, 'path', '')
   return a:shellesc ? gitgutter#utility#shellescape(p) : p
 endfunction
 
@@ -190,8 +194,20 @@ function! s:restore_shell() abort
   endif
 endfunction
 
+function! gitgutter#utility#set_diff_base_if_fugitive(bufnr)
+  let p = resolve(expand('#'.a:bufnr.':p'))
+  let ml = matchlist(p, '\v^fugitive:/.*/(\x{40,})/')
+  if !empty(ml) && !empty(ml[1])
+    let g:gitgutter_diff_base = ml[1].'^'
+  endif
+endfunction
+
 function! s:abs_path(bufnr, shellesc)
   let p = resolve(expand('#'.a:bufnr.':p'))
+
+  " Remove extra parts from fugitive's filepaths
+  let p = substitute(substitute(p, '^fugitive:', '', ''), '\v\.git/\x{40,}/', '', '')
+
   return a:shellesc ? gitgutter#utility#shellescape(p) : p
 endfunction
 

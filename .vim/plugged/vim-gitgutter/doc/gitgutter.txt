@@ -16,6 +16,7 @@ CONTENTS                                                            *gitgutter*
   Commands ..................... |gitgutter-commands|
   Mappings ..................... |gitgutter-mappings|
   Autocommand .................. |gitgutter-autocommand|
+  Status line .................. |gitgutter-statusline|
   Options ...................... |gitgutter-options|
   Highlights ................... |gitgutter-highlights|
   FAQ .......................... |gitgutter-faq|
@@ -224,6 +225,23 @@ trailing empty lines.
 
 
 ===============================================================================
+STATUS LINE                                              *gitgutter-statusline*
+
+
+Call the `GitGutterGetHunkSummary()` function from your status line to get a
+list of counts of added, modified, and removed lines in the current buffer.
+For example:
+>
+    " Your vimrc
+    function! GitStatus()
+      let [a,m,r] = GitGutterGetHunkSummary()
+      return printf('+%d ~%d -%d', a, m, r)
+    endfunction
+    set statusline+=%{GitStatus()}
+<
+
+
+===============================================================================
 OPTIONS                                                     *gitgutter-options*
 
 The most important option is 'updatetime' which determines how long (in
@@ -301,6 +319,9 @@ a revision instead.  For example:
 >
     let g:gitgutter_diff_base = '<some commit SHA>'
 <
+
+If you are looking at a previous version of a file with Fugitive (e.g.
+via :0Gclog), gitgutter sets the diff base to the parent of the current revision.
 
                                                              *g:gitgutter_grep*
 Default: 'grep'
