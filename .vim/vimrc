@@ -90,6 +90,7 @@ augroup vimrc
                          highlight statusline term=none cterm=none gui=none guibg=bg guifg=grey |
                          highlight statuslinenc term=none cterm=none gui=none guibg=bg guifg=grey
    autocmd colorscheme * highlight pmenu guifg=#002b36 guibg=#839496
+   autocmd colorscheme * highlight Comment cterm=italic gui=italic
 augroup end
 
 augroup js_snippets
@@ -278,6 +279,7 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'Yggdroot/indentLine'
 
 " -- version control
 
@@ -346,9 +348,13 @@ let g:user_emmet_settings = {
     \  },
   \}
 
+let g:ale_linters = {
+\  'javascript': ['prettier', 'eslint'],
+\  'typescript': ['tsserver', 'prettier', 'eslint']
+\}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
-\   'typescript': ['tslint' ,'prettier'],
+\   'typescript': ['tsserver', 'eslint'],
 \   'css': ['prettier'],
 \   'scss': ['prettier']
 \}
@@ -397,6 +403,9 @@ let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '<'
 let g:gitgutter_override_sign_column_highlight = 1
+
+let g:indentLine_char = '⎸'
+
 highlight SignColumn guibg=bg
 highlight SignColumn ctermbg=bg
 
