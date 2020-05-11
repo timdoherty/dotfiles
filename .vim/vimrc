@@ -327,6 +327,12 @@ endfunction
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
+ " YCM
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+
  " NERDTree
 let NERDTreeShowHidden=1                                  " show hidden files in nerdtree
 let NERDTreeQuitOnOpen = 1                                " quit nerdtree when opening a file
@@ -353,8 +359,8 @@ let g:ale_linters = {
 \  'typescript': ['tsserver', 'prettier', 'eslint']
 \}
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'typescript': ['tsserver', 'eslint'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
 \   'css': ['prettier'],
 \   'scss': ['prettier']
 \}
@@ -384,7 +390,7 @@ let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_theme= 'hybrid'
+let g:airline_theme= 'minimalist'
 
 "=== vim-fugitive
 " show commits for every source line
@@ -405,6 +411,8 @@ let g:gitgutter_sign_modified_removed = '<'
 let g:gitgutter_override_sign_column_highlight = 1
 
 let g:indentLine_char = '⎸'
+" let g:indentLine_setConceal = 0
+" let g:indentLine_conceallevel = 1
 
 highlight SignColumn guibg=bg
 highlight SignColumn ctermbg=bg
