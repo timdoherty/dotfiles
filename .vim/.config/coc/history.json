@@ -1,0 +1,21 @@
+{
+  "extensions": {
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
+      ":",
+      "n"
+    ]
+  },
+  "symbols": {
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
+      "c"
+    ]
+  },
+  "snippets": {
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp%2Fsrc": [
+      "des"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
+      "describe"
+    ]
+  }
+}

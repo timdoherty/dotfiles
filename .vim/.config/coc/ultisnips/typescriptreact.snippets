@@ -1,0 +1,199 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#### ES 2015+ ####
+snippet afn "ES6 anonymous arrow function" i
+() => {${VISUAL}}
+endsnippet
+
+snippet cfn "ES6 named arrow function expression" i
+const ${1} = (${2}) => {${VISUAL}}
+endsnippet
+
+snippet map "ES 2015 map data structure"
+const ${1:mapName} = new Map([
+  ['${2:key}', ${3:value}],
+]);
+endsnippet
+
+snippet arm "Array.prototype.map"
+[${1}].map((${2}) => {
+  ${VISUAL}
+})
+endsnippet
+#### End ES 2015+ ####
+
+#### >= ES5 ####
+snippet fpt "Function.prototype" i
+Function.prototype
+endsnippet
+#### End >= ES5 ####
+
+#### Testing ####
+snippet jut
+import ${1:myModule} from '../$1';
+
+describe('$1', () => {
+  describe('given $1', () => {
+    describe('when something happens to $1', () => {
+      it('asserts facts about what happend to $1', () => {
+        expect($1).toBeDefined();
+      })
+    });
+  })
+});
+endsnippet
+
+snippet jct ""
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import ${1:MyComponent} from '../$1';
+
+describe('<$1/>', () => {
+  describe('given $0$1', () => {
+    describe('when something happens to $1', () => {
+      it('asserts facts about what happend to $1', () => {
+        const wrapper = shallow(
+          <$1 />
+        );
+        expect(wrapper.exists()).toBe(true);
+      })
+    });
+  })
+});
+endsnippet
+
+snippet ess ""
+const wrapper = shallow(
+  <${1:MyComponent}/>
+);
+endsnippet
+
+snippet ems ""
+const wrapper = mount(
+  <${1:MyComponent}/>
+);
+endsnippet
+
+snippet act "act test-utils"
+act(() => {
+  ${VISUAL}
+})
+endsnippet
+
+snippet ewf "Enzyme wrapper.find()" i
+wrapper.find('${1}')
+endsnippet
+
+snippet efw "Enzyme findWhere()" i
+findWhere(node => node${1} === ${2})
+endsnippet
+#### End Testing ####
+
+#### React ###
+snippet rfc ""
+import React from 'react';
+import PropTypes from 'prop-types';
+$0
+function ${1:MyComponent}(props) {
+  return (
+    <div></div>
+  );
+}
+
+$1.propTypes = {};
+
+$1.defaultProps = {};
+
+export default $1;
+endsnippet
+
+
+snippet rcc ""
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+class ${1:MyComponent} extends Component {
+  static get propTypes() {
+    return {};
+  }
+
+  static get defaultProps() {
+    return {};
+  }
+
+  render() {
+    return (
+      <div />
+    );
+  }
+}
+
+export default $1;
+endsnippet
+
+snippet rrfc ""
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+function ${1:MyComponent}(props) {
+  return <div />;
+}
+
+$1.propTypes = {};
+
+$1.defaultProps = {};
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)($1);
+endsnippet
+
+snippet ram "React Array.prototype.map"
+{[${1}].map((${2}) => (
+  ${VISUAL}
+))}
+endsnippet
+
+# React hooks
+snippet ust "useState"
+const [${1}, set${1/\w+\s*/\u$0/}] = useState(${2})
+endsnippet
+
+snippet uef "useEffect"
+useEffect(() => {
+
+}, [${1}])
+endsnippet
+#### React ###
