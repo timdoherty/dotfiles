@@ -1,8 +1,11 @@
 {
   "dependencies": {
     "coc-css": ">=1.2.3",
+    "coc-eslint": ">=1.2.6",
+    "coc-explorer": ">=0.7.5",
     "coc-html": ">=1.2.4",
     "coc-json": ">=1.2.6",
+    "coc-marketplace": ">=1.7.0",
     "coc-prettier": ">=1.1.12",
     "coc-snippets": ">=2.1.26",
     "coc-tsserver": ">=1.5.1"

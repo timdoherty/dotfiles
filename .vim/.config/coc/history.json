@@ -3,6 +3,9 @@
     "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
       ":",
       "n"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
+      ":"
     ]
   },
   "symbols": {
@@ -16,6 +19,27 @@
     ],
     "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
       "describe"
+    ]
+  },
+  "diagnostics": {
+    "%2FUsers%2Ftimd%2Fsource%2Fcore%2Fpackages%2Fcore-eslint": [
+      "/ ",
+      "e#:e#:e#;:::e#gt v:"
+    ]
+  },
+  "services": {
+    "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
+      ":q"
+    ]
+  },
+  "marketplace": {
+    "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
+      "explore"
+    ]
+  },
+  "explorerActions": {
+    "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
+      "j"
     ]
   }
 }

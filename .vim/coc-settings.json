@@ -1,4 +1,10 @@
 {
+  "coc.preferences.hoverTarget": "float",
+  "signature.target": "float",
+  "suggest.floatEnable": true,
+  "suggest.enablePreview":true,
+  "codeLens.enable": false,
+  "diagnostic.messageTarget": "float",
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "javascriptreact",
@@ -16,5 +22,10 @@
   "snippets.ultisnips.directories": [
     "UltiSnips",
     "~/.vim/plugged/vim-snippets/UltiSnips"
-  ]
+  ],
+  "eslint.options": {
+    "configfile": "./.eslintrc.json"
+  },
+  "explorer.icon.enableNerdfont": true,
+  "explorer.previewAction.onHover": false
 }
