@@ -59,6 +59,7 @@ set wildmenu                                              " enable wilcard for e
 set wildmode=longest:list,full
 set wrapmargin=0
 set nowrap
+set encoding=UTF-8
 
 
 :silent !stty -ixon                                        " allow us to use ctrl-s and ctrl-q as keybinds
@@ -70,8 +71,11 @@ set omnifunc=syntaxcomplete#Complete                      " enable 'intelisense'
 filetype indent on                                        " enable filetype-specific indenting
 filetype plugin on                                        " enable filetype-specific plugins
 
-syntax on
-syntax enable
+" syntax on
+" syntax enable
+if !exists('g:syntax_on')
+  syntax enable
+endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -84,10 +88,10 @@ augroup javascript_folding
 augroup end
 
 function! ColoHighlights() abort
-   highlight vertsplit term=none cterm=none ctermfg=none ctermbg=none guibg=bg guifg=grey
+   highlight vertsplit term=none cterm=none ctermfg=none ctermbg=none guibg=bg guifg=black
    highlight statusline term=none cterm=none gui=none guibg=bg guifg=grey
    highlight statuslinenc term=none cterm=none gui=none guibg=bg guifg=grey
-   highlight pmenu guifg=#cb4a16 guibg=#00262e
+   highlight pmenu guifg=#2aa197 guibg=#00262e
    highlight PmenuSbar guifg=red guibg=#000000
    highlight PmenuThumb guibg=#333333
    highlight Comment cterm=italic gui=italic
@@ -97,6 +101,7 @@ augroup SetColors
   autocmd!
   autocmd ColorScheme * call ColoHighlights()
 augroup END
+
 colorscheme solarized8
 
 augroup js_snippets
@@ -115,9 +120,17 @@ au FocusLost,WinLeave * :silent! w
 " Automatically equalize splits when Vim is resized
 autocmd VimResized * wincmd =
 
+" toggle indentlines plugin for json files
+autocmd Filetype json :IndentLinesDisable
+
+
 " jsx comments
 " autocmd FileType jsx setlocal commentstring={/*\ %s\ */}
 " autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
+
+" ts/tsx comments
+autocmd FileType typescript.tsx setlocal commentstring=//\ %s
+autocmd FileType typescriptreact setlocal commentstring=//\ %s
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -161,7 +174,7 @@ map <C-n> :let @+ = expand("%") <CR>
 
 " LEADER
 " toggle nerdtree
-" map <leader>n :NERDTreeToggle <CR>
+map <leader>n :NERDTreeToggle <CR>
 
 " Fuzzy finder
 noremap <leader>f :Files <CR>
@@ -268,8 +281,11 @@ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript', 'javascript.jsx']}
 Plug 'SirVer/ultisnips'
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
+Plug 'tpope/vim-rbenv'
+Plug 'tpope/vim-bundler'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
@@ -280,6 +296,8 @@ Plug 'ludovicchabant/vim-gutentags'
 " -- Search & file nav
 
 Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 
 " -- Display
@@ -370,6 +388,10 @@ set signcolumn=yes
 
 " User configuration object, so I can keep it in dotfiles
 let g:coc_data_home = '~/.vim/.config/coc'
+
+" global extensions
+
+let g:coc_global_extensions = ['coc-solargraph']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -499,7 +521,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " co-explorer
-nnoremap <Leader>n :CocCommand explorer<CR>
+" nnoremap <Leader>n :CocCommand explorer<CR>
 """ END CoC"""
 
 
@@ -509,6 +531,25 @@ let NERDTreeQuitOnOpen = 1                                " quit nerdtree when o
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+" let g:webdevicons_conceal_nerdtree_brackets = 1
+
+" sync open file with NERDTree
+" " Check if NERDTree is open or active
+" function! IsNERDTreeOpen()        
+"   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
+
+" " Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" " file, and we're not in vimdiff
+" function! SyncTree()
+"   if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+"     NERDTreeFind
+"     wincmd p
+"   endif
+" endfunction
+
+" Highlight currently open buffer in NERDTree
+" autocmd BufEnter * call SyncTree()
 
 " vim-jsx
 let g:jsx_ext_required = 0
@@ -537,7 +578,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 let g:airline_powerline_fonts = 1
 
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 if !exists('g:airline_symbols')

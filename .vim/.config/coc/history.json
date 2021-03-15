@@ -6,11 +6,20 @@
     ],
     "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
       ":"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fui-service-shell": [
+      "n"
     ]
   },
   "symbols": {
     "%2FUsers%2Ftimd%2Fsource%2Fprocore%2Fhydra_clients%2Futp": [
       "c"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fmodule-federation-example": [
+      "cjj"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fadr": [
+      "du"
     ]
   },
   "snippets": {
@@ -25,6 +34,26 @@
     "%2FUsers%2Ftimd%2Fsource%2Fcore%2Fpackages%2Fcore-eslint": [
       "/ ",
       "e#:e#:e#;:::e#gt v:"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fadr": [
+      "kk",
+      "un ",
+      " ",
+      " for ",
+      "he",
+      "dd "
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fskeleton_ui_service": [
+      "dd"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore": [
+      " "
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fui-service-shell": [
+      " "
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fadr%2Ffrontend": [
+      "d "
     ]
   },
   "services": {
@@ -40,6 +69,28 @@
   "explorerActions": {
     "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages%2Fpakaukau": [
       "j"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fcore-labs%2Fpackages": [
+      "cd"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fjsconf-be-2020": [
+      "pa",
+      "c"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fui-service-shell": [
+      "next",
+      "prev"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fskeleton_ui_service": [
+      "ren",
+      "rena"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fprocore": [
+      "]",
+      "cop"
+    ],
+    "%2FUsers%2Ftimd%2Fsource%2Fjsconf-be-2020%2Fxss-app": [
+      "renam"
     ]
   }
 }

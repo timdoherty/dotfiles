@@ -1,4 +1,4 @@
-" MIT License. Copyright (c) 2019 Peng Guanwen et al.
+" MIT License. Copyright (c) 2019-2021 Peng Guanwen et al.
 " vim: et ts=2 sts=2 sw=2
 " Plugin: https://github.com/neoclide/coc
 
@@ -38,7 +38,8 @@ function! airline#extensions#coc#get(type) abort
   if empty(cnt)
     return ''
   else
-    return (is_err ? s:error_symbol : s:warning_symbol).cnt
+    let lnum = printf('(L%d)', (info.lnums)[0])
+    return (is_err ? s:error_symbol : s:warning_symbol).cnt.lnum
   endif
 endfunction
 

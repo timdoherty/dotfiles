@@ -27,5 +27,6 @@
     "configfile": "./.eslintrc.json"
   },
   "explorer.icon.enableNerdfont": true,
+  "explorer.width": 30,
   "explorer.previewAction.onHover": false
 }

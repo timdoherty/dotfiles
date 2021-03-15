@@ -119,11 +119,14 @@ export NODE_OPTIONS=--max_old_space_size=4096
 
 # tmux / vim solarized 
 export TERM="xterm-256color"
+
+# aiases
 alias tmux="tmux -2"
+alias v="vim"
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
 
 # tabtab source for packages
 # uninstall by removing these lines
-[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+# [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true

@@ -162,7 +162,17 @@ nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 ```
 
-You can load all your hunks into the quickfix list with `:GitGutterQuickFix`.  Note this ignores any unsaved changes in your buffers. If the option `g:gitgutter_use_location_list` is set, this command will load hunks into the current window's location list instead.
+When you jump between hunks, a message like `Hunk 4 of 11` is shown on the command line. If you want to turn the message off, you can use:
+
+```viml
+let g:gitgutter_show_msg_on_hunk_jumping = 0
+```
+
+You can load all your hunks into the quickfix list with `:GitGutterQuickFix`.  Note this ignores any unsaved changes in your buffers. If the option `g:gitgutter_use_location_list` is set, this command will load hunks into the current window's location list instead.  Use `:copen` (or `:lopen`) to open the quickfix / location list or add a custom command like this:
+
+```viml
+command! Gqf GitGutterQuickFix | copen
+```
 
 You can stage or undo an individual hunk when your cursor is in it:
 
@@ -290,19 +300,14 @@ Please note that vim-gitgutter won't override any colours or highlights you've s
 
 #### Sign column
 
-By default vim-gitgutter will make the sign column look like the line number column.
-
-To customise your sign column's background color, first tell vim-gitgutter to leave it alone:
+Set the `SignColumn` highlight group to change the sign column's colour.  For example:
 
 ```viml
-let g:gitgutter_override_sign_column_highlight = 0
-```
+" vim-gitgutter used to do this by default:
+highlight! link SignColumn LineNr
 
-And then either update your colorscheme's `SignColumn` highlight group or set it in your vimrc:
-
-```viml
-highlight SignColumn ctermbg=whatever    " terminal Vim
-highlight SignColumn guibg=whatever      " gVim/MacVim
+" or you could do this:
+highlight SignColumn guibg=whatever ctermbg=whatever
 ```
 
 By default the sign column will appear when there are signs to show and disappear when there aren't.  To always have the sign column, add to your vimrc:
@@ -321,13 +326,15 @@ let g:gitgutter_sign_allow_clobber = 1
 
 #### Signs' colours and symbols
 
-If you or your colourscheme has defined `GitGutter*` highlight groups, the plugin will use those for the signs' colours.
+If you or your colourscheme has defined `GitGutter*` highlight groups, the plugin will use them for the signs' colours.
 
-Otherwise it will use your colourscheme's `Diff*` highlight groups.
+If you want the background colours to match the sign column, but don't want to update the `GitGutter*` groups yourself, you can get the plugin to do it:
 
-Either way the signs' background colours will be set to the sign column's background colour.
+```viml
+let g:gitgutter_set_sign_backgrounds = 1
+```
 
-If you don't like the colours, specify the ones you want in your vimrc (see `:help highlight-guifg` and `:help highlight-ctermfg`).  For example, to get vim-gitgutter's original colours (based on git-diff's colours in my terminal):
+If no `GitGutter*` highlight groups exist, the plugin will check the `Diff*` highlight groups.  If their foreground colours differ the plugin will use them; if not, these colours will be used:
 
 ```viml
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
@@ -342,6 +349,7 @@ let g:gitgutter_sign_added = 'xx'
 let g:gitgutter_sign_modified = 'yy'
 let g:gitgutter_sign_removed = 'zz'
 let g:gitgutter_sign_removed_first_line = '^^'
+let g:gitgutter_sign_removed_above_and_below = '{'
 let g:gitgutter_sign_modified_removed = 'ww'
 ```
 
@@ -651,7 +659,10 @@ Here are some things you can check:
 * Verify `:echo system("git --version")` succeeds.
 * Verify your git config is compatible with the version of git returned by the command above.
 * Verify your Vim supports signs (`:echo has('signs')` should give `1`).
-* Verify your file is being tracked by git and has unstaged changes.
+* Verify your file is being tracked by git and has unstaged changes.  Check whether the plugin thinks git knows about your file: `:echo b:gitgutter.path` should show the path to the file in the repo.
+* Execute `:sign place group=gitgutter`; you should see a list of signs.
+  - If the signs are listed: this is a colorscheme / highlight problem.  Compare `:highlight GitGutterAdd` with `:highlight SignColumn`.
+  - If no signs are listed: the call to git-diff is probably failing.  Add `let g:gitgutter_log=1` to your vimrc, restart, reproduce the problem, and look at the `gitgutter.log` file in the plugin's directory.
 
 #### When the whole file is marked as added
 

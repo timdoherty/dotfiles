@@ -420,7 +420,9 @@ let s:addr_other = has('patch-8.1.560') ? '-addr=other' : ''
 let s:addr_tabs  = has('patch-7.4.542') ? '-addr=tabs' : ''
 let s:addr_wins  = has('patch-7.4.542') ? '-addr=windows' : ''
 
-command! -bang -nargs=? -range=-1 -complete=customlist,fugitive#Complete G   exe fugitive#Command(<line1>, <count>, +"<range>", <bang>0, "<mods>", <q-args>)
+if exists(':G') != 2
+  command! -bang -nargs=? -range=-1 -complete=customlist,fugitive#Complete G   exe fugitive#Command(<line1>, <count>, +"<range>", <bang>0, "<mods>", <q-args>)
+endif
 command! -bang -nargs=? -range=-1 -complete=customlist,fugitive#Complete Git exe fugitive#Command(<line1>, <count>, +"<range>", <bang>0, "<mods>", <q-args>)
 
 if exists(':Gstatus') !=# 2
@@ -429,7 +431,9 @@ endif
 
 for s:cmd in ['Commit', 'Revert', 'Merge', 'Rebase', 'Pull', 'Push', 'Fetch', 'Blame']
   if exists(':G' . tolower(s:cmd)) != 2
-    exe 'command! -bang -nargs=? -range=-1 -complete=customlist,fugitive#' . s:cmd . 'Complete G' . tolower(s:cmd) 'exe fugitive#Command(<line1>, <count>, +"<range>", <bang>0, "<mods>", "' . tolower(s:cmd) . ' " . <q-args>)'
+    exe 'command! -bang -nargs=? -range=-1 -complete=customlist,fugitive#' . s:cmd . 'Complete G' . tolower(s:cmd)
+          \ 'echohl WarningMSG|echo ":G' . tolower(s:cmd) . ' is deprecated in favor of :Git ' . tolower(s:cmd) . '\n"|echohl NONE|'
+          \ 'exe fugitive#Command(<line1>, <count>, +"<range>", <bang>0, "<mods>", "' . tolower(s:cmd) . ' " . <q-args>)'
   endif
 endfor
 unlet s:cmd

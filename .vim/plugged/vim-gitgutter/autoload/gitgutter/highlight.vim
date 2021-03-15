@@ -64,14 +64,6 @@ function! gitgutter#highlight#linenr_toggle() abort
 endfunction
 
 
-function! gitgutter#highlight#define_sign_column_highlight() abort
-  if g:gitgutter_override_sign_column_highlight
-    highlight! link SignColumn LineNr
-  else
-    highlight default link SignColumn LineNr
-  endif
-endfunction
-
 function! gitgutter#highlight#define_highlights() abort
   let [guibg, ctermbg] = s:get_background_colors('SignColumn')
 
@@ -84,11 +76,12 @@ function! gitgutter#highlight#define_highlights() abort
   highlight default link GitGutterChangeDeleteInvisible GitGutterChangeInvisible
 
   " When they are visible.
-
-  " The background colours are set to the sign column's.
   for type in ["Add", "Change", "Delete"]
-    if hlexists("GitGutter".type)
-      let [guifg, ctermfg] = s:get_foreground_colors('GitGutter'.type)
+    if hlexists("GitGutter".type) && s:get_foreground_colors("GitGutter".type) != ['NONE', 'NONE']
+      if g:gitgutter_set_sign_backgrounds
+        execute "highlight GitGutter".type." guibg=".guibg." ctermbg=".ctermbg
+      endif
+      continue
     elseif s:useful_diff_colours()
       let [guifg, ctermfg] = s:get_foreground_colors('Diff'.type)
     else
@@ -96,6 +89,10 @@ function! gitgutter#highlight#define_highlights() abort
     endif
     execute "highlight GitGutter".type." guifg=".guifg." guibg=".guibg." ctermfg=".ctermfg." ctermbg=".ctermbg
   endfor
+
+  if hlexists("GitGutterChangeDelete") && g:gitgutter_set_sign_backgrounds
+    execute "highlight GitGutterChangeDelete guibg=".guibg." ctermbg=".ctermbg
+  endif
 
   highlight default link GitGutterChangeDelete GitGutterChange
 
